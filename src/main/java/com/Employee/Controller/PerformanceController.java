@@ -25,7 +25,7 @@ public class PerformanceController {
 		this.performanceService = performanceService;
 	}
 
-	// Get Performance Summary (For getting both self and manager reviews)
+	// Get Performance Summary 
 	@GetMapping("/{employeeId}")
 	public ResponseEntity<?> getPerformanceSummary(@PathVariable Long employeeId) {
 		return ResponseEntity.ok(performanceService.getPerformanceSummary(employeeId));
@@ -35,7 +35,7 @@ public class PerformanceController {
 	@PostMapping("/self-review/{employeeId}")
 	public ResponseEntity<?> submitSelfReview(@PathVariable Long employeeId,
 			@RequestBody Map<String, Object> reviewData) {
-		// Check if self-review is already submitted
+		
 		boolean isSubmitted = performanceService.isSelfReviewSubmitted(employeeId);
 		if (isSubmitted) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -49,7 +49,6 @@ public class PerformanceController {
 	@PostMapping("/manager-review/{employeeId}")
 	public ResponseEntity<?> submitManagerReview(@PathVariable Long employeeId,
 			@RequestBody Map<String, Object> reviewData) {
-		// Check if employee has submitted their self-review
 		boolean isSelfReviewSubmitted = performanceService.isSelfReviewSubmitted(employeeId);
 		if (!isSelfReviewSubmitted) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
