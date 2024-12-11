@@ -48,7 +48,7 @@ public class PerformanceService {
 		String selfReviewText = (String) reviewData.get("selfReviewText");
 		Integer selfRating = (Integer) reviewData.get("selfRating"); // Can be null
 
-		// Create and save self-review
+		
 		SelfReview selfReview = new SelfReview();
 		selfReview.setEmployee(employee);
 		selfReview.setReviewText(selfReviewText);
@@ -75,7 +75,7 @@ public class PerformanceService {
 		String managerReviewText = (String) reviewData.get("managerReviewText");
 		Integer managerRating = (Integer) reviewData.get("managerRating");
 
-		// Create and save manager review
+		
 		ManagerReview managerReview = new ManagerReview();
 		managerReview.setEmployee(employee);
 		managerReview.setReviewText(managerReviewText);
@@ -85,7 +85,7 @@ public class PerformanceService {
 		return ResponseEntity.status(HttpStatus.CREATED).body("Manager review submitted successfully.");
 	}
 
-	// Get Performance Summary for an employee
+	
 	public Map<String, Object> getPerformanceSummary(Long employeeId) {
 		List<SelfReview> selfReviews = selfReviewRepository.findByEmployeeId(employeeId);
 		List<ManagerReview> managerReviews = managerReviewRepository.findByEmployeeId(employeeId);
@@ -102,7 +102,7 @@ public class PerformanceService {
 		double finalScore = (selfReviewScore * 0.3) + (managerReview.getRating() * 0.7); 
 																							// rating
 
-		// Prepare the summary
+		
 		Map<String, Object> summary = new HashMap<>();
 		summary.put("employee", employeeRepository.findById(employeeId).orElseThrow());
 		summary.put("selfReview", selfReview);
