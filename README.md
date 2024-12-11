@@ -5,7 +5,6 @@ This system allows employees to submit their self-reviews, managers to provide r
 
 ## Technologies Used
 - Spring Boot
-- Thymeleaf
 - RESTful APIs
 
 ## How to Run
