@@ -1,7 +1,7 @@
 # Employee Performance Management System
 
 ## Description
-This system allows employees to submit their self-reviews, managers to provide reviews, and calculate the final performance score.
+This system allows employees to submit their self-reviews, managers to provide reviews and calculate the final performance score.
 
 ## Technologies Used
 - Spring Boot
@@ -11,4 +11,4 @@ This system allows employees to submit their self-reviews, managers to provide r
 ## How to Run
 1. Clone the repository.
 2. Run the Spring Boot application.
-3. Test the APIs using Postman or access the Thymeleaf pages.
+3. Test the APIs using Postman 
