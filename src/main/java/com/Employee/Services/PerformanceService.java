@@ -34,7 +34,7 @@ public class PerformanceService {
 
 	// Step 1: Employee submits self-review and self-rating
 	public ResponseEntity<?> submitSelfReview(Long employeeId, Map<String, Object> reviewData) {
-		// Validate employee exists
+		
 		Employee employee = employeeRepository.findById(employeeId)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
 
@@ -45,7 +45,6 @@ public class PerformanceService {
 					.body("Self-review already submitted for this employee.");
 		}
 
-		// Get self-review data
 		String selfReviewText = (String) reviewData.get("selfReviewText");
 		Integer selfRating = (Integer) reviewData.get("selfRating"); // Can be null
 
@@ -53,7 +52,7 @@ public class PerformanceService {
 		SelfReview selfReview = new SelfReview();
 		selfReview.setEmployee(employee);
 		selfReview.setReviewText(selfReviewText);
-		selfReview.setSelfRating(selfRating); // Allow null for selfRating if not provided
+		selfReview.setSelfRating(selfRating); 
 		selfReviewRepository.save(selfReview);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body("Self-review submitted successfully.");
@@ -65,14 +64,14 @@ public class PerformanceService {
 		Employee employee = employeeRepository.findById(employeeId)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
 
-		// Check if employee has submitted a self-review
+		
 		List<SelfReview> selfReviews = selfReviewRepository.findByEmployeeId(employeeId);
 		if (selfReviews.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body("Employee must submit self-review before manager review.");
 		}
 
-		// Get manager review data
+		
 		String managerReviewText = (String) reviewData.get("managerReviewText");
 		Integer managerRating = (Integer) reviewData.get("managerRating");
 
@@ -95,13 +94,12 @@ public class PerformanceService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Reviews not found for employee ID: " + employeeId);
 		}
 
-		SelfReview selfReview = selfReviews.get(0); // Assuming one self-review per employee
-		ManagerReview managerReview = managerReviews.get(0); // Assuming one manager review per employee
+		SelfReview selfReview = selfReviews.get(0);
+		ManagerReview managerReview = managerReviews.get(0); 
 
-		// Calculate self-review score based on the review text length (e.g., simple
-		// scoring)
+		// Calculate self-review score based on the review text length 
 		double selfReviewScore = selfReview.getReviewText().length() / 100.0;
-		double finalScore = (selfReviewScore * 0.3) + (managerReview.getRating() * 0.7); // 30% self-review, 70% manager
+		double finalScore = (selfReviewScore * 0.3) + (managerReview.getRating() * 0.7); 
 																							// rating
 
 		// Prepare the summary
@@ -114,7 +112,7 @@ public class PerformanceService {
 		return summary;
 	}
 
-	// Method to check if the self-review is already submitted by the employee
+	
 	public boolean isSelfReviewSubmitted(Long employeeId) {
 		List<SelfReview> selfReviews = selfReviewRepository.findByEmployeeId(employeeId);
 		return !selfReviews.isEmpty();
